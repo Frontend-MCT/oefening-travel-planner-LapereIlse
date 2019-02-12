@@ -1,0 +1,151 @@
+/* 
+
+SETTINGS 
+
+*/
+
+:root {
+    --color-alpha: #de4831;
+    --color-beta: #e1decb;
+    --color-dark: #221e21;
+
+    --gutter: 24px;
+}
+
+/* 
+
+ELEMENTS
+
+*/
+
+body, 
+html {
+    /* Positioning */
+
+    /* Box model */
+
+    /* Fonts */
+    font-family: "Sarabun", sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-dark);
+
+    /* Appearance */
+
+    /* Other styles */
+}
+
+/*
+
+OBJECTS 
+
+*/
+
+.o-grid {
+    display: grid;
+    gap: calc(var(--gutter)*2);
+}
+
+/* 
+
+COMPONENTS 
+
+*/
+
+/* Sidebar */
+.c-sidebar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box; /* add padding on the inside */
+    padding: var(--gutter);
+
+    background: var(--color-beta);
+    
+    overflow-x: auto;   
+}
+.c-sidebar-header {
+    display: flex;
+    align-items: center;
+}
+
+.c-sidebar-header__image{
+    max-height: var(--gutter);
+}
+
+.c-sidebar-header__title {
+    font-size: 1rem; /* Relative to the body's font-size */
+    margin-left: calc(var(--gutter)/2);
+}
+
+.c-sidebar-menu {}
+
+/* Menu */
+
+.c-menu__list {
+    /* reset vorige layout */
+    list-style: none;
+    padding: 0;
+    margin: 0 0 calc(var(--gutter)*3);
+    /* je kan je margin op volgende manier definiëren => top/right/bottom/left OF top/bottom en right/left OF top right/left bottom OF alle 4 */
+}
+
+.c-menu__title {
+    margin-bottom: 0;
+    font-size: .8rem;
+    text-transform: uppercase; 
+    opacity: .7;
+}
+
+.c-menu__item {
+
+}
+
+.c-menu__link {
+    /* verwijdert alle huidige css, zet de unset altijd  bovenaan! */
+    all: unset;
+
+    color: var(--color-alpha);
+    letter-spacing: 1px;
+    font-size: .95rem;
+    font-weight: 600;
+
+    will-change: opacity;
+    transition: opacity 200ms ease-out;
+
+    opacity: .7;
+    cursor: pointer;
+}
+
+.c-menu__link:hover {
+    opacity: 1;
+}
+
+.c-sidebar-counter {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Content */
+
+.c-content {
+    height: 100vh;
+    overflow-x: auto;
+}
+
+/* 
+
+UTILITIES 
+
+*/
+
+.u-grid-main-layout {
+    grid-template-columns: 350px 1fr;
+    min-height: 100vh;
+}
+
+.u-color-alpha {
+    color: var(--color-alpha);
+    font-style: normal;
+}
