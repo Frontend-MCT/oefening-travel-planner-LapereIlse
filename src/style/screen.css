@@ -46,6 +46,17 @@ OBJECTS
     gap: calc(var(--gutter)*2);
 }
 
+.o-hide {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
 /* 
 
 COMPONENTS 
@@ -132,7 +143,47 @@ COMPONENTS
 .c-content {
     height: 100vh;
     overflow-x: auto;
+    padding: var(--gutter) calc(var(--gutter)*2) var(--gutter) 0;
+    box-sizing: border-box;
 }
+
+/* Country */
+
+.c-country {
+    display: block;
+    opacity: 1;
+    /* Je cursor wordt een handje */
+    cursor: pointer;
+}
+
+.c-country-input:checked + .c-country {
+    opacity: 0.6;
+}
+
+.c-country-header {
+    display: flex;
+    align-items: center;
+}
+
+.c-country-header__name {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+    margin: 0;
+}
+
+.c-country-header__flag {
+    display: block;
+    height: calc(var(--gutter)/1.5);
+    margin-left: calc(var(--gutter)/2);
+    border-radius: 4px;
+}
+
+.c-country__native-name {
+    color: var(--color-beta);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
 
 /* 
 
@@ -143,6 +194,10 @@ UTILITIES
 .u-grid-main-layout {
     grid-template-columns: 350px 1fr;
     min-height: 100vh;
+}
+
+.u-grid-overview {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .u-color-alpha {
