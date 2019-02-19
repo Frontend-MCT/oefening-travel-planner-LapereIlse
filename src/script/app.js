@@ -1,6 +1,7 @@
 // console.log("Welcome there!");
 
 let countryHolder;
+let amountHolder;
 const localKey = 'travel-planner';
 
 const init = () =>  {
@@ -26,6 +27,7 @@ const enableListeners = () => {
     }
 
     countryHolder = document.querySelector('.js-country-holder');
+    amountHolder = document.querySelector('.js-amount');
 
     // Always start with Europe
     fetchCountries('europe');
@@ -48,7 +50,7 @@ const showCountries = data => {
         // #2 Build a HTML-string for each country
         countries += `                
         <article>
-            <input id="${country.cioc}-${country.alpha2Code}" class="o-hide c-country-input" type="checkbox">
+            <input id="${country.cioc}-${country.alpha2Code}" class="o-hide c-country-input" type="checkbox" ${(hasItem(country.cioc + '-' + country.alpha2Code)) ? 'checked="checked"' : ''} />
             <label for="${country.cioc}-${country.alpha2Code}" class="c-country js-country">
                 <div class="c-country-header">
                     <h2 class="c-country-header__name">${country.name}</h2>
@@ -72,29 +74,60 @@ const showCountries = data => {
 };
 
 const addListenersToCountries = function(classSelector) {
+    updateCounter();
     const countries = document.querySelectorAll(classSelector);
 
-    for (country of countries) {
+    for (const country of countries) {
         country.addEventListener('click', function() {
-            console.log('You clicked me ', this);
+            // console.log('You clicked me ', this);
+            const countryKey = this.getAttribute('for'); // for heeft de correcte en unieke key
+            if (hasItem(countryKey)) {
+                removeItem(countryKey);
+            } else {
+                addItem(countryKey);
+            }
+            updateCounter();
         });
     }
 }
 
-const hasItem = key => { // true/false
-
+const hasItem = key => { // true/false    
+    // return ~getAllItems().indexOf(key); // -1 -> not found; anders de positie || -> -getAllItems() => bitoperator 0000 0101 -> 1111 1111
+    return getAllItems().includes(key);
 }; 
 
+const getAllItems = () => {
+    // if (localStorage.hasItem(localKey)) {  // localStorage heeft ook een function 'hasItem()'
+    //     return localStorage.getItem(localKey);
+    // }
+    // else {
+    //     return [];
+    // }
+    return JSON.parse(localStorage.getItem(localKey)) || [];
+}
+
 const addItem = key => { // void / true || false?
-    localStorage.setItem(key);
+    let countries = getAllItems(); // array
+    countries.push(key); // nieuw item toevoegen
+    localStorage.setItem(localKey, JSON.stringify(countries));
 };
 
 const removeItem = key => { // void / true || false?
-    localStorage.removeItem(key);
+    // -> we maken een nieuwe list aan die aangevinkte toevoegd en uitgevinkte opnieuw verwijderd.
+    const index = getAllItems().indexOf(key); // waar staat het land die weg mag?
+    let savedCountries = getAllItems();
+    savedCountries.splice(index, 1); // verwijder dat item in de array
+    localStorage.setItem(localKey, JSON.stringify(savedCountries))
+    // -> hier verwijdert hij gewoon de dubbels
+    // localStorage.removeItem(key); 
 };
 
-const countItem = key => { // integer -> 0 ... 250
-
+const countItems = () => { // integer -> 0 ... 250
+    return getAllItems().length;
 };
+
+const updateCounter = () => {
+    amountHolder.innerHTML = countItems();
+}
 
 document.addEventListener('DOMContentLoaded', init);
